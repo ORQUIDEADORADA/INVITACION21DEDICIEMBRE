@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación Oficial de Gala - NEXUS 2026 | Technology School</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Montserrat:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        nexus: {
+                            barca: '#004D98',
+                            barcaDeep: '#04142E',
+                            barcaMidnight: '#020B1C',
+                            babySky: '#BAE6FD',
+                            skyGlow: '#7DD3FC',
+                            iceWhite: '#F0F9FF'
+                        }
+                    },
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        montserrat: ['Montserrat', 'sans-serif'],
+                        cursive: ['Great Vibes', 'cursive']
+                    },
+                    animation: {
+                        'pulse-glow': 'pulseGlow 3s infinite alternate',
+                        'float': 'float 5s ease-in-out infinite'
+                    },
+                    keyframes: {
+                        pulseGlow: {
+                            '0%': { boxShadow: '0 0 18px rgba(125, 211, 252, 0.35)' },
+                            '100%': { boxShadow: '0 0 42px rgba(186, 230, 253, 0.7)' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background: radial-gradient(circle at 50% 0%, #004D98 0%, #061A3A 58%, #020A19 100%);
+            color: #F0F9FF;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Degradado editorial Celeste Bebé y Azul Barcelona */
+        .nexus-gradient-text {
+            background: linear-gradient(135deg, #FFFFFF 0%, #BAE6FD 38%, #7DD3FC 70%, #38BDF8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nexus-btn-gradient {
+            background: linear-gradient(135deg, #004D98 0%, #0B2C5E 100%);
+        }
+
+        /* Tarjetas de cristal azul barcelona con borde celeste bebé */
+        .glass-nexus {
+            background: linear-gradient(145deg, rgba(0, 77, 152, 0.38) 0%, rgba(5, 21, 48, 0.90) 60%, rgba(2, 10, 25, 0.96) 100%);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(186, 230, 253, 0.36);
+            box-shadow: 0 25px 55px -12px rgba(0, 15, 40, 0.8), inset 0 1px 1px rgba(186, 230, 253, 0.2);
+        }
+
+        .ambient-halo {
+            position: absolute;
+            width: 520px;
+            height: 520px;
+            background: radial-gradient(circle, rgba(125, 211, 252, 0.22) 0%, rgba(0, 77, 152, 0.18) 48%, rgba(0, 0, 0, 0) 72%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .ornament-line {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(186, 230, 253, 0.65), transparent);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #020A19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #7DD3FC, #004D98);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen">
+
+    <!-- CANVAS DE CONSTELACIÓN Y PARTÍCULAS CELESTE BEBÉ / AZUL BARCELONA -->
+    <canvas id="bgCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+    <!-- ========================================== -->
+    <!-- PANTALLA DE BIENVENIDA CINEMÁTICA          -->
+    <!-- ========================================== -->
+    <div id="introScreen" class="fixed inset-0 z-50 flex items-center justify-center bg-[#020917] transition-opacity duration-1000 px-4">
+        <div class="ambient-halo"></div>
+
+        <div class="relative z-10 max-w-2xl w-full text-center glass-nexus rounded-3xl p-8 sm:p-14 border border-sky-200/40">
+            <div class="w-20 h-20 mx-auto mb-6 rounded-full border border-sky-200/60 bg-[#004D98]/50 flex items-center justify-center shadow-lg shadow-sky-950/60 animate-float">
+                <i data-lucide="graduation-cap" class="w-10 h-10 text-sky-200"></i>
+            </div>
+
+            <p class="font-cinzel text-xs sm:text-sm tracking-[0.35em] text-sky-200 uppercase mb-3">
+                Technology School • Nivel Primaria
+            </p>
+
+            <div class="ornament-line w-48 mx-auto my-4"></div>
+
+            <h1 class="font-cinzel text-4xl sm:text-6xl font-black nexus-gradient-text tracking-widest uppercase mb-2">
+                NEXUS 2026
+            </h1>
+
+            <p class="font-cursive text-3xl sm:text-5xl text-sky-100 mb-8">
+                "Una Noche Inolvidable de Gala y Ensueño"
+            </p>
+
+            <button onclick="openInvitation()" class="group relative inline-flex items-center justify-center px-9 py-4 font-cinzel font-bold text-white rounded-full nexus-btn-gradient border border-sky-200/55 shadow-xl animate-pulse-glow hover:scale-105 transition-all duration-300 tracking-widest text-xs sm:text-sm uppercase">
+                <i data-lucide="sparkles" class="w-5 h-5 mr-2.5 text-sky-200"></i>
+                Abrir Invitación Oficial
+            </button>
+
+            <p class="text-[11px] text-sky-200/70 mt-5 tracking-wider uppercase">
+                Toca para ingresar con música de gala
+            </p>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- CONTENIDO PRINCIPAL DE LA INVITACIÓN       -->
+    <!-- ========================================== -->
+    <main id="mainContent" class="relative z-10 min-h-screen opacity-0 pointer-events-none transition-opacity duration-1000 pb-24">
+
+        <!-- BOTÓN FLOTANTE DE AUDIO -->
+        <button id="audioToggleBtn" onclick="toggleAudio()" title="Activar o silenciar música" class="fixed bottom-6 right-6 z-40 p-3.5 rounded-full glass-nexus border border-sky-200/50 text-sky-200 shadow-2xl hover:scale-110 transition-transform flex items-center justify-center">
+            <i id="audioIcon" data-lucide="volume-2" class="w-6 h-6"></i>
+        </button>
+
+        <!-- ENCABEZADO HERO -->
+        <section class="relative min-h-[75vh] flex flex-col justify-center items-center text-center px-4 pt-14 pb-12 overflow-hidden">
+            <div class="ambient-halo top-10 left-1/2 -translate-x-1/2"></div>
+
+            <div class="inline-flex items-center gap-2.5 px-6 py-2 rounded-full glass-nexus border border-sky-200/40 mb-6 animate-float">
+                <i data-lucide="award" class="w-4 h-4 text-sky-200"></i>
+                <span class="font-cinzel text-[11px] sm:text-xs font-bold tracking-[0.28em] text-sky-100 uppercase">
+                    Technology School • Nivel Primaria
+                </span>
+            </div>
+
+            <p class="font-cinzel text-xs sm:text-sm tracking-[0.4em] text-sky-200/85 uppercase mb-2">
+                Gran Gala de Graduación
+            </p>
+
+            <h1 class="font-cinzel text-5xl sm:text-8xl font-black tracking-[0.15em] uppercase mb-3 nexus-gradient-text drop-shadow-lg">
+                NEXUS
+            </h1>
+
+            <div class="ornament-line w-64 sm:w-96 mx-auto my-3"></div>
+
+            <p class="font-cursive text-3xl sm:text-5xl text-sky-100/95 mb-6 px-2">
+                "Una Noche Inolvidable de Gala y Ensueño"
+            </p>
+
+            <p class="max-w-xl text-sky-100/85 text-sm sm:text-base font-light leading-relaxed px-4">
+                Con la alegría de culminar una etapa fundamental en Nivel Primaria, les invitamos cordialmente a celebrar nuestra ceremonia y recepción de gala.
+            </p>
+        </section>
+
+        <!-- TARJETA DE BIENVENIDA Y CALENDARIO -->
+        <section class="max-w-4xl mx-auto px-4 mb-16">
+            <div class="glass-nexus rounded-3xl p-8 sm:p-12 text-center relative overflow-hidden">
+                <div class="w-16 h-16 mx-auto rounded-full bg-[#004D98]/40 border border-sky-200/45 flex items-center justify-center mb-5 text-sky-200">
+                    <i data-lucide="mail-open" class="w-7 h-7"></i>
+                </div>
+
+                <h2 class="font-cinzel text-2xl sm:text-3xl font-bold tracking-widest text-white uppercase mb-4">
+                    Está Cordialmente <span class="nexus-gradient-text">Invitado/a</span>
+                </h2>
+
+                <p class="text-sky-100/85 text-sm sm:text-base font-light leading-relaxed max-w-2xl mx-auto mb-8">
+                    Su presencia iluminará esta noche tan significativa para nuestros graduados y sus familias.
+                </p>
+
+                <button onclick="addToCalendar()" class="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full nexus-btn-gradient border border-sky-200/50 text-white font-cinzel font-bold text-xs sm:text-sm tracking-widest uppercase hover:opacity-95 hover:scale-105 transition-all shadow-lg shadow-sky-950/60">
+                    <i data-lucide="calendar-plus" class="w-4 h-4 text-sky-200"></i>
+                    Agendar en Google Calendar
+                </button>
+            </div>
+        </section>
+
+        <!-- CUENTA REGRESIVA -->
+        <section class="max-w-4xl mx-auto px-4 mb-16">
+            <div class="glass-nexus rounded-3xl p-6 sm:p-10 text-center">
+                <p class="font-cinzel text-xs sm:text-sm font-bold tracking-[0.3em] text-sky-200 uppercase mb-6 flex items-center justify-center gap-2">
+                    <i data-lucide="clock" class="w-4 h-4"></i> Tiempo Restante para la Gala
+                </p>
+
+                <div class="grid grid-cols-4 gap-2.5 sm:gap-6 max-w-2xl mx-auto">
+                    <div class="bg-[#030E22]/90 p-3.5 sm:p-6 rounded-2xl border border-sky-200/30">
+                        <span id="cd-days" class="font-cinzel text-2xl sm:text-5xl font-bold text-white block">00</span>
+                        <span class="text-[9px] sm:text-xs text-sky-200/80 uppercase tracking-widest mt-1.5 block">Días</span>
+                    </div>
+                    <div class="bg-[#030E22]/90 p-3.5 sm:p-6 rounded-2xl border border-sky-200/30">
+                        <span id="cd-hours" class="font-cinzel text-2xl sm:text-5xl font-bold text-white block">00</span>
+                        <span class="text-[9px] sm:text-xs text-sky-200/80 uppercase tracking-widest mt-1.5 block">Horas</span>
+                    </div>
+                    <div class="bg-[#030E22]/90 p-3.5 sm:p-6 rounded-2xl border border-sky-200/30">
+                        <span id="cd-minutes" class="font-cinzel text-2xl sm:text-5xl font-bold text-white block">00</span>
+                        <span class="text-[9px] sm:text-xs text-sky-200/80 uppercase tracking-widest mt-1.5 block">Minutos</span>
+                    </div>
+                    <div class="bg-[#030E22]/90 p-3.5 sm:p-6 rounded-2xl border border-sky-200/30">
+                        <span id="cd-seconds" class="font-cinzel text-2xl sm:text-5xl font-bold text-sky-200 block">00</span>
+                        <span class="text-[9px] sm:text-xs text-sky-200/80 uppercase tracking-widest mt-1.5 block">Segundos</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DETALLES DE LA CEREMONIA (3 COLUMNAS) -->
+        <section class="max-w-5xl mx-auto px-4 mb-16">
+            <div class="text-center mb-10">
+                <p class="font-cinzel text-xs tracking-[0.3em] text-sky-200 uppercase mb-2">Coordenadas del Evento</p>
+                <h2 class="font-cinzel text-2xl sm:text-4xl font-bold text-white tracking-widest uppercase">
+                    Detalles de la <span class="nexus-gradient-text">Ceremonia</span>
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Fecha -->
+                <div class="glass-nexus rounded-3xl p-8 text-center flex flex-col items-center hover:border-sky-200/65 transition-all duration-300">
+                    <div class="w-14 h-14 rounded-full bg-[#004D98]/45 border border-sky-200/45 flex items-center justify-center mb-5 text-sky-200">
+                        <i data-lucide="calendar" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="font-cinzel text-base font-bold text-sky-200 uppercase tracking-widest mb-2">Fecha Confirmada</h3>
+                    <p class="text-white font-semibold text-base">Lunes, 21 de Diciembre</p>
+                    <p class="text-sky-200/75 text-xs mt-1">Año 2026 • Recepción 06:30 PM</p>
+                </div>
+
+                <!-- Ubicación -->
+                <div class="glass-nexus rounded-3xl p-8 text-center flex flex-col items-center hover:border-sky-200/65 transition-all duration-300">
+                    <div class="w-14 h-14 rounded-full bg-[#004D98]/45 border border-sky-200/45 flex items-center justify-center mb-5 text-sky-200">
+                        <i data-lucide="map-pin" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="font-cinzel text-base font-bold text-sky-200 uppercase tracking-widest mb-2">Ubicación del Salón</h3>
+                    <p class="text-white font-semibold text-base">Orquídea Dorada</p>
+                    <p class="text-sky-200/75 text-xs mt-1 mb-4">Av. Chillón Trapiche 051, Comas</p>
+                    <a href="https://www.google.com/maps/place/?q=place_id:ChIJ_fvvfPzRBZERNVtsrRCZYkA" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-sky-200/50 text-sky-100 font-cinzel text-[11px] font-bold tracking-wider uppercase hover:bg-[#004D98] hover:text-white transition-all">
+                        <i data-lucide="navigation" class="w-3.5 h-3.5"></i> Ver en Google Maps
+                    </a>
+                </div>
+
+                <!-- Colores y Etiqueta -->
+                <div class="glass-nexus rounded-3xl p-8 text-center flex flex-col items-center hover:border-sky-200/65 transition-all duration-300">
+                    <div class="w-14 h-14 rounded-full bg-[#004D98]/45 border border-sky-200/45 flex items-center justify-center mb-5 text-sky-200">
+                        <i data-lucide="sparkles" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="font-cinzel text-base font-bold text-sky-200 uppercase tracking-widest mb-2">Colores & Etiqueta</h3>
+                    <p class="text-white font-semibold text-base">Celeste Bebé & Azul Barcelona</p>
+                    <p class="text-sky-200/75 text-xs mt-1">Gala Formal • Nivel Primaria</p>
+                    <p class="text-sky-200/75 text-xs">Recepción 06:30 PM • Ceremonia 08:00 PM</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROGRAMA DE LA NOCHE (TIMELINE) -->
+        <section class="max-w-3xl mx-auto px-4 mb-16">
+            <div class="glass-nexus rounded-3xl p-8 sm:p-12">
+                <div class="text-center mb-10">
+                    <p class="font-cinzel text-xs tracking-[0.3em] text-sky-200 uppercase mb-2">Itinerario Oficial</p>
+                    <h2 class="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-widest uppercase">
+                        Programa de la <span class="nexus-gradient-text">Noche</span>
+                    </h2>
+                </div>
+
+                <div class="relative border-l-2 border-sky-200/40 ml-28 sm:ml-44 space-y-10 my-4">
+                    <!-- Item 1 -->
+                    <div class="relative pl-6 sm:pl-8 flex flex-col justify-center min-h-[42px]">
+                        <span class="absolute -left-[9px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-sky-200 shadow-md shadow-sky-200/60 border-2 border-[#020A19]"></span>
+                        <span class="absolute -left-28 sm:-left-44 top-1/2 -translate-y-1/2 font-cinzel text-sky-200 font-bold text-xs sm:text-sm text-right w-24 sm:w-40 pr-2">06:30 PM</span>
+                        <h4 class="font-cinzel text-sm sm:text-base font-bold text-white tracking-wider uppercase">Ingreso / Recepción</h4>
+                        <p class="text-xs text-sky-200/75 font-light mt-0.5">Bienvenida oficial en el salón principal</p>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="relative pl-6 sm:pl-8 flex flex-col justify-center min-h-[42px]">
+                        <span class="absolute -left-[9px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-sky-200 shadow-md shadow-sky-200/60 border-2 border-[#020A19]"></span>
+                        <span class="absolute -left-28 sm:-left-44 top-1/2 -translate-y-1/2 font-cinzel text-sky-200 font-bold text-xs sm:text-sm text-right w-24 sm:w-40 pr-2 leading-tight">07:00 PM - 08:00 PM</span>
+                        <h4 class="font-cinzel text-sm sm:text-base font-bold text-white tracking-wider uppercase">Sesión Fotográfica</h4>
+                        <p class="text-xs text-sky-200/75 font-light mt-0.5">Retratos oficiales de gala con familiares e invitados</p>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="relative pl-6 sm:pl-8 flex flex-col justify-center min-h-[42px]">
+                        <span class="absolute -left-[9px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-sky-200 shadow-md shadow-sky-200/60 border-2 border-[#020A19]"></span>
+                        <span class="absolute -left-28 sm:-left-44 top-1/2 -translate-y-1/2 font-cinzel text-sky-200 font-bold text-xs sm:text-sm text-right w-24 sm:w-40 pr-2">08:00 PM</span>
+                        <h4 class="font-cinzel text-sm sm:text-base font-bold text-white tracking-wider uppercase">Ceremonia Principal</h4>
+                        <p class="text-xs text-sky-200/75 font-light mt-0.5">Acto central de graduación de la Promoción NEXUS</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PIE DE PÁGINA INSTITUCIONAL -->
+        <footer class="text-center text-sky-200/75 text-xs font-cinzel pt-8 max-w-4xl mx-auto px-4">
+            <div class="ornament-line w-full mb-8"></div>
+            <p class="tracking-[0.25em] text-sky-100 font-semibold">TECHNOLOGY SCHOOL • PROMOCIÓN NEXUS 2026</p>
+            <p class="mt-2 text-sky-200/70 font-montserrat text-[11px]">Agradecemos profundamente su grata compañía en esta noche inolvidable.</p>
+        </footer>
+    </main>
+
+    <!-- SCRIPT DE ANIMACIONES, AUDIO Y CUENTA REGRESIVA -->
+    <script>
+        if (window.lucide) lucide.createIcons();
+
+        let audioCtx = null;
+        let isPlayingAudio = false;
+        let musicInterval = null;
+
+        function startGalaMusic() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+            }
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            if (musicInterval) return;
+
+            const chords = [
+                { bass: 130.81, notes: [261.63, 329.63, 392.00, 523.25] },
+                { bass: 164.81, notes: [329.63, 392.00, 493.88, 659.25] },
+                { bass: 174.61, notes: [349.23, 440.00, 523.25, 698.46] },
+                { bass: 196.00, notes: [392.00, 493.88, 587.33, 783.99] }
+            ];
+
+            let step = 0;
+            musicInterval = setInterval(() => {
+                if (!audioCtx || audioCtx.state !== 'running') return;
+                const chord = chords[Math.floor(step / 3) % chords.length];
+                const beat = step % 3;
+                const now = audioCtx.currentTime;
+
+                if (beat === 0) {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(chord.bass, now);
+                    gain.gain.setValueAtTime(0.001, now);
+                    gain.gain.exponentialRampToValueAtTime(0.09, now + 0.06);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.95);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 1.0);
+                } else {
+                    chord.notes.forEach((freq, i) => {
+                        const osc = audioCtx.createOscillator();
+                        const gain = audioCtx.createGain();
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(freq, now);
+                        gain.gain.setValueAtTime(0.001, now);
+                        gain.gain.exponentialRampToValueAtTime(0.025 / (i + 1), now + 0.04);
+                        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.65);
+                        osc.connect(gain);
+                        gain.connect(audioCtx.destination);
+                        osc.start(now);
+                        osc.stop(now + 0.7);
+                    });
+                }
+                step++;
+            }, 480);
+
+            isPlayingAudio = true;
+            updateAudioIcon();
+        }
+
+        function toggleAudio() {
+            if (!audioCtx) {
+                startGalaMusic();
+                return;
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+                isPlayingAudio = true;
+            } else {
+                audioCtx.suspend();
+                isPlayingAudio = false;
+            }
+            updateAudioIcon();
+        }
+
+        function updateAudioIcon() {
+            const icon = document.getElementById('audioIcon');
+            if (icon) {
+                icon.setAttribute('data-lucide', isPlayingAudio ? 'volume-2' : 'volume-x');
+                if (window.lucide) lucide.createIcons();
+            }
+        }
+
+        function stopAudioOnLeave() {
+            if (audioCtx && audioCtx.state === 'running') {
+                audioCtx.suspend();
+                isPlayingAudio = false;
+                updateAudioIcon();
+            }
+        }
+        document.addEventListener('visibilitychange', () => { if (document.hidden) stopAudioOnLeave(); });
+        window.addEventListener('pagehide', stopAudioOnLeave);
+
+        function openInvitation() {
+            startGalaMusic();
+            const intro = document.getElementById('introScreen');
+            const main = document.getElementById('mainContent');
+
+            intro.classList.add('opacity-0');
+            setTimeout(() => {
+                intro.classList.add('hidden');
+                main.classList.remove('pointer-events-none', 'opacity-0');
+
+                if (typeof confetti === 'function') {
+                    confetti({
+                        particleCount: 110,
+                        spread: 85,
+                        origin: { y: 0.6 },
+                        colors: ['#BAE6FD', '#7DD3FC', '#004D98', '#FFFFFF']
+                    });
+                }
+            }, 850);
+        }
+
+        function addToCalendar() {
+            const title = encodeURIComponent("Gala de Graduación Promoción NEXUS 2026 - Technology School");
+            const details = encodeURIComponent("Gran Gala de Graduación Promoción NEXUS - Nivel Primaria.\n\nPrograma:\n- 06:30 PM: Ingreso / Recepción\n- 07:00 PM - 08:00 PM: Sesión Fotográfica\n- 08:00 PM: Ceremonia Principal");
+            const location = encodeURIComponent("Orquídea Dorada, Av. Chillón Trapiche 051, Comas");
+            // 18:30 PET (UTC-5) = 23:30 UTC del 21 de Diciembre
+            const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=20261221T233000Z/20261222T040000Z&details=${details}&location=${location}`;
+            window.open(url, '_blank');
+        }
+
+        // Cuenta regresiva (Lunes 21 de Diciembre de 2026 - 06:30 PM)
+        const target = new Date("2026-12-21T18:30:00").getTime();
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const diff = target - now;
+            if (diff <= 0) return;
+
+            document.getElementById('cd-days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+            document.getElementById('cd-hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+            document.getElementById('cd-minutes').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+            document.getElementById('cd-seconds').innerText = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Fondo de Constelación y Partículas Celeste Bebé y Azul Barcelona
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        const particles = Array.from({ length: 65 }, (_, idx) => ({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            r: Math.random() * 2 + 0.5,
+            vx: (Math.random() - 0.5) * 0.25,
+            vy: Math.random() * -0.4 - 0.15,
+            alpha: Math.random() * 0.65 + 0.2,
+            isBabySky: idx % 2 === 0
+        }));
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 110) {
+                        ctx.strokeStyle = `rgba(186, 230, 253, ${0.15 * (1 - dist / 110)})`;
+                        ctx.lineWidth = 0.6;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.y < 0) p.y = canvas.height;
+                if (p.x < 0) p.x = canvas.width;
+                if (p.x > canvas.width) p.x = 0;
+
+                ctx.fillStyle = p.isBabySky
+                    ? `rgba(186, 230, 253, ${p.alpha})`
+                    : `rgba(56, 189, 248, ${p.alpha * 0.85})`;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
+    </script>
+</body>
+</html>
